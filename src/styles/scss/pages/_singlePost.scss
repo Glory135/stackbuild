@@ -1,0 +1,120 @@
+& .singlePost {
+    width: 100%;
+    min-height: 90vh;
+    @include position(flex-start, center);
+    padding-top: 40px;
+
+    & .singlePost-container {
+        width: 90%;
+
+        & .singlePost-details {
+            width: 100%;
+            @include position(flex-start, flex-start, column);
+            gap: 10px;
+
+            & .detail {
+                text-transform: capitalize;
+
+                &.single-post-title {
+                    font-size: 20px;
+                    color: $primary;
+                    font-weight: bold;
+                }
+
+                &.single-post-owner {
+                    font-size: 14px;
+                    color: $light_text;
+                }
+
+                &.single-post-tags-actions {
+                    width: 100%;
+                    @include position(center, space-between);
+                    gap: 10px;
+
+                    @include sm {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+
+                    & .single-post-tags {
+                        display: flex;
+                        gap: 5px;
+                        flex-wrap: wrap;
+
+                        & .tag {
+                            font-size: 14px;
+                            color: white;
+                            background-color: $light_secondary;
+                            padding: 5px;
+                            border-radius: 3px;
+                        }
+                    }
+
+                    & .actions {
+                        & .btn {
+                            color: white;
+                            border-radius: 10px;
+                            margin: 0 5px;
+
+                            &.edit-btn {
+                                background-color: cornflowerblue;
+                            }
+
+                            &.delete-btn {
+                                background-color: red;
+                            }
+                        }
+                    }
+                }
+
+                &.singlePost-timeStamp{
+                    font-size: 14px;
+                    color: $light_text;
+                }
+            }
+        }
+
+        & .singlePost-content {
+            width: 100%;
+            min-height: 30vh;
+            height: auto;
+            margin-top: 20px;
+            line-height: 15px;
+        }
+
+        & .singlePost-comments{
+            width: 100%;
+
+            & h3{
+
+                & span{
+                    color: $primary;
+                }
+            }
+            & .comments{
+                width: 100%;
+                & .comment{
+                    box-shadow: $shadow-bottom;
+                    margin-bottom: 20px;
+                    padding: 10px 5px;
+                    & .comment-head{
+                        display: flex;
+                        gap: 10px;
+                        width: 100%;
+                        margin-bottom: 10px;
+                        text-transform: capitalize;
+
+                        @include sm{
+                            flex-direction: column;
+                        }
+
+                        & span.time{
+                            color: $light_text;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

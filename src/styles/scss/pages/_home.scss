@@ -1,0 +1,118 @@
+& .home {
+    width: 100%;
+    @include position(center, flex-start, column);
+    padding: 20px 0;
+    gap: 20px;
+
+    & .search {
+        width: 100%;
+        @include position(center, center, column);
+        gap: 5px;
+
+        & .search-head {
+            font-weight: bold;
+            font-style: italic;
+            color: $light_text;
+        }
+
+        & .search-input-container {
+            width: 50%;
+            border-radius: 20px;
+            box-shadow: $shadow-sm;
+            display: flex;
+
+            @include sm {
+                width: 90%;
+            }
+
+            & input {
+                font-size: 18px;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 20px 0 0 20px;
+                width: 80%;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            & .search-btn {
+                height: 100%;
+                width: 20%;
+                border-radius: 0 20px 20px 0;
+                @include position;
+                gap: 10px;
+                background-color: $secondary;
+                color: white;
+
+                & span {
+                    @include sm {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    & .posts-container {
+        width: 100%;
+        @include position(center, flex-start, column);
+        gap: 10px;
+
+        // & .posts-head {
+        //     width: 95%;
+
+        //     @include sm {
+        //         width: 90%;
+        //     }
+
+        //     & h3{
+        //         font-size: 20px;
+        //         @include sm{
+        //             font-size: 18px;
+        //         }
+        //     }
+        // }
+
+        & .posts {
+            width: 95%;
+            display: flex;
+            justify-content: center;
+
+            @include sm {
+                width: 90%;
+            }
+
+            & .loading {
+                width: 100%;
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+
+                & .loader-img {
+                    width: calc((100% - 30px) / 4) ;
+                    height: auto;
+
+                    @include sm {
+                        width: 100%;
+                    }
+                }
+            }
+
+
+            & .posts-list {
+                width: 100%;
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+
+                // 		single Post in list
+                @import '../components/singlePostList';
+            }
+        }
+
+        
+    }
+
+}

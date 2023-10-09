@@ -1,0 +1,38 @@
+& .create-post-page{
+    width: 100%;
+    min-height: 80vh;
+    height: auto ;
+    @include position;
+    @include sm{
+        min-height: 60vh;
+    }
+
+    & .create-con{
+        min-width: 50%;
+        width: auto;
+        @include position(flex-start, flex-start, column);
+        gap: 20px;
+
+        @include sm{
+            min-width: 80%;
+        }
+        & h3{
+            font-size: 18px;
+            // color: $light_text;
+            margin-bottom: 10px;
+        }
+
+        & .create-input{
+            width: 100%;
+        }
+
+        & .create-btn{
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: $primary;
+            font-weight: bold;
+            color: white;
+        }
+    }
+}

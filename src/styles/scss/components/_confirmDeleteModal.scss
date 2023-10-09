@@ -1,0 +1,54 @@
+.confirm-container {
+    transform: scale(0);
+    animation: pop 0.5s forwards;
+    width: 40vw;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    padding: 10px;
+    @include bg-gloss;
+    @include sm{
+        width: 90%;
+    }
+
+    & .head{
+        width: 100%;
+        padding: 5px;
+        @include position(center, space-between);
+
+        & h3{
+            font-weight:bold;
+        }
+
+        & span{
+            & .cancel-icon{
+                font-size: 40px;
+                color: $light_text;
+                cursor: pointer;
+            }
+        }
+    }
+    & .body{
+        width: 100%;
+        padding: 10px;
+        font-size: 17px;
+    }
+    & .confirm-actions{
+        width: 100%;
+        @include position(center, space-between);
+        margin-top: 30px;
+
+        & .btn-delete{
+            background-color: red;
+            color: white;
+        }
+        & .btn-cancel{
+            background-color: lightgray;
+        }
+    }
+}

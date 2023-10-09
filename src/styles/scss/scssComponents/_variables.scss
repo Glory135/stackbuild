@@ -1,0 +1,112 @@
+// Global variables that would be used accross the app
+$shadow-bottom: 0px 13px 12px -5px rgba(0, 0, 0, 0.103);
+$shadow: 0px 3px 10px 6px rgba(0, 0, 0, 0.1);
+$shadow-sm: 1px 1px 2px 2px rgba(211, 211, 211, 0.307);
+$primary: #434CAD;
+$light_primary: #7179d3b6;
+$secondary: #EF6487;
+$light_secondary: #f5829fd2;
+$text: #0b070d;
+$light_text: #bebebe;
+
+// --------------FREDQUENTLY USED STYLES----------------
+
+// flex
+@mixin position($align: center, $justify: center, $flow: row) {
+	display: flex;
+	align-items: $align;
+	justify-content: $justify;
+	flex-direction: $flow;
+}
+
+// text gradient
+@mixin text-gradient($first: $primary, $second: $secondary) {
+	background: $first;
+	background: linear-gradient(to right, $first 0%, $second 81%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+// background gradient
+@mixin bg-gradient($first: $primary, $second: $secondary) {
+	background: rgba(2, 0, 36, 0.788);
+	background: linear-gradient(94deg, $first 12%, $second 100%);
+}
+
+// glossy bacground
+@mixin bg-gloss(){
+	background-color: rgba(255, 255, 255, 0.85);
+	backdrop-filter: saturate(180%) blur(10px);
+}
+
+// braw line under on hover
+@mixin hover-animation($line-color: black) {
+	position: relative;
+	// padding: 5px;
+	font-weight: bold;
+	cursor: pointer;
+	&::after {
+		position: absolute;
+		left: 0;
+		bottom: 0px;
+		content: '';
+		width: 0;
+		height: 5px;
+		border-radius: 10px;
+		background-color: $line-color;
+	}
+	&:hover::after {
+		width: 100%;
+	}
+}
+
+// scale down a little on click
+@mixin click-animation(){
+	&:active {
+		transform: scale(90%);
+		transition: 0.2s;
+	}
+}
+
+
+// Responsiveness with different breakpoints for different screens
+$breakpoints: (
+	'xsm': 300px,
+	'sm': 700px,
+	'md': 800px,
+	'lg': 1000px,
+	'xl': 1250px,
+);
+
+@mixin xsm {
+	@media (max-width: map-get($breakpoints, 'xsm')) {
+		@content;
+	}
+}
+@mixin sm {
+	@media (max-width: map-get($breakpoints, 'sm')) {
+		@content;
+	}
+}
+@mixin md {
+	@media (max-width: map-get($breakpoints, 'md')) {
+		@content;
+	}
+}
+@mixin lg {
+	@media (max-width: map-get($breakpoints, 'lg')) {
+		@content;
+	}
+}
+@mixin xl {
+	@media (max-width: map-get($breakpoints, 'xl')) {
+		@content;
+	}
+}
+
+// custom breakpoint
+@mixin media($bp) {
+	@media (max-width: $bp) {
+		@content;
+	}
+}

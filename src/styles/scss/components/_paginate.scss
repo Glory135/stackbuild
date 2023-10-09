@@ -1,0 +1,51 @@
+& .pagination {
+    @include position;
+    width: 95%;
+
+    & .main-paginate {
+        @include position(center, flex-start);
+        gap: 20px;
+
+        @include sm {
+            text-align: flex-start;
+            flex-flow: column;
+        }
+
+        & .current-page {
+            font-size: 14px;
+            font-style: italic;
+            color: $light_text;
+
+            & span {
+                font-weight: bold;
+                color: $text;
+            }
+        }
+
+        & .btn-con {
+            display: flex;
+            gap: 5px;
+
+            & .page-btn {
+                padding: 5px;
+                border-radius: 5px;
+                font-size: 12px;
+                @include position;
+                gap: 5px;
+                cursor: pointer;
+                color: white;
+                background-color: $primary;
+            }
+        }
+
+        & .limit {
+            color: $light_text;
+
+            & select {
+                width: 60px;
+                padding: 5px;
+                border-radius: 5px;
+            }
+        }
+    }
+}

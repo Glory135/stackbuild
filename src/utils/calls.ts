@@ -59,7 +59,6 @@ export const createPost = async (data: Create) => {
             headers: { 'app-id': APP_ID }
         }
     ).then((res) => {
-        console.log(res);
         return res.data
     }
     ).catch((err) => {
@@ -88,7 +87,6 @@ export const deletePost = async (id: string) => {
             headers: { 'app-id': APP_ID }
         }
     ).then((res) => {
-        console.log(res.data);
         return res.data
     }
     ).catch((err) => {
@@ -105,8 +103,6 @@ export const createComment = async (data: CommentCreate) => {
             headers: { 'app-id': APP_ID }
         }
     ).then((res) => {
-        console.log(res);
-        
         return res.data
     }
     ).catch((err) => {

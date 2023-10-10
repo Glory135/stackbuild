@@ -3,6 +3,8 @@ import { Cancel } from '@mui/icons-material'
 import { Modal } from '@mui/material'
 import { useRouter } from 'next/navigation';
 import React from 'react'
+import { toast } from 'react-toastify';
+
 
 export default function ConfirmDeleteModal({ open, setOpen, id }: { open: boolean, setOpen: Function, id: string }) {
     const { push } = useRouter();
@@ -25,7 +27,11 @@ export default function ConfirmDeleteModal({ open, setOpen, id }: { open: boolea
                     Are you sure you want to delete this?
                 </div>
                 <div className="confirm-actions">
-                    <button onClick={() => { deletePost(id); push('/') }} className="btn btn-delete">
+                    <button onClick={() => {
+                        deletePost(id);
+                        toast.success('Deleted successfully', { autoClose: 5000 })
+                        push('/')
+                    }} className="btn btn-delete">
                         Delete
                     </button>
                     <button onClick={handleClose} className="btn btn-cancel">

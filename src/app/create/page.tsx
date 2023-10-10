@@ -1,35 +1,78 @@
 'use client'
 
-import { createPost, getAllTags } from '@/utils/calls';
+import { createPost, getAllTags, getSingleData, updatePost } from '@/utils/calls';
 import { Create } from '@/utils/interfaces';
 import { Box, Chip, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function Create() {
+    // this page is used for both the create and edit post 
+    // editmode is enables when there is a post query param 
+
     const [title, setTitle] = useState('')
     // const [content, setContent] = useState('')
     const [selectedTags, setSelectedTags] = useState<string[]>([])
+    const [editMode, setEditMode] = useState<boolean>(false)
 
     const { push } = useRouter();
+    const searchParams = useSearchParams()
+    const postId = searchParams.get('post')
 
+    // get tags
     const { data, isLoading, isSuccess } = useQuery({
         queryKey: ['TAGS'],
         queryFn: () => getAllTags()
     })
 
+    // get data of post to be edited if param is found
+    if (postId) {
+        useQuery({
+            queryKey: ['SINGLEPOSTUPDATE'],
+            queryFn: () => getSingleData(postId),
+            onSuccess: (singleData) => {
+                setTitle(singleData.text)
+                setSelectedTags(singleData.tags)
+            }
+        })
+    }
+
+    // to switch editMode on and off depending on the postId param
+    useEffect(() => {
+        if (postId) {
+            setEditMode(true)
+        } else {
+            setEditMode(false)
+        }
+    }, [])
+
+    // submit for for both edit and create based on editmode
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const data: Create = {
-            text: title,
-            likes: 0,
-            tags: selectedTags,
-            // content,
-            owner: '60d0fe4f5311236168a109d5'
+        // when true
+        if (editMode && postId) {
+            const data = {
+                text: title,
+                tags: selectedTags,
+            }
+            updatePost(postId, data)
+            toast.success('Updated successfully', { autoClose: 5000 })
         }
-        createPost(data);
+        // when faklse
+        else {
+            const data: Create = {
+                text: title,
+                likes: 0,
+                tags: selectedTags,
+                // content,
+                owner: '60d0fe4f5311236168a109d5'
+            }
+            createPost(data);
+            toast.success('Post created', { autoClose: 5000 })
+        }
         push('/')
     }
 
@@ -45,7 +88,18 @@ export default function Create() {
     return (
         <div className="create-post-page" >
             <form className="create-con" onSubmit={handleSubmit}>
-                <h3>Create a post here</h3>
+                {
+                    editMode
+                        ?
+                        (
+                            <h3>Edit Post </h3>
+                        )
+                        :
+                        (
+                            <h3>Create Post Here</h3>
+                        )
+                }
+
                 <TextField
                     required
                     label="Title"
@@ -83,7 +137,7 @@ export default function Create() {
                     {
                         isLoading ?
                             (
-                                <div>Loading...</div>
+                                <div>Loading tags...</div>
                             )
                             : isSuccess ?
                                 (
@@ -102,7 +156,17 @@ export default function Create() {
                     }
 
                 </Select>
-                <button className="create-btn btn">Post</button>
+                <button className="create-btn btn">
+                    {
+                        editMode ?
+                            (
+                                'Update'
+                            ) :
+                            (
+                                'Post'
+                            )
+                    }
+                </button>
             </form>
         </div>
     )

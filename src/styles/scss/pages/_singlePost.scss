@@ -67,7 +67,7 @@
                     }
                 }
 
-                &.singlePost-timeStamp{
+                &.singlePost-timeStamp {
                     font-size: 14px;
                     color: $light_text;
                 }
@@ -82,33 +82,52 @@
             line-height: 15px;
         }
 
-        & .singlePost-comments{
+        & .write-comment {
             width: 100%;
 
-            & h3{
+            & .comment-input {
+                width: 100%;
+                margin-bottom: 20px;
+            }
 
-                & span{
+            & .comment-btn {
+                color: white;
+                background-color: $primary;
+                padding: 10px 40px;
+                margin-bottom: 20px;
+            }
+        }
+
+        & .singlePost-comments {
+            width: 100%;
+
+            & h3 {
+
+                & span {
                     color: $primary;
                 }
             }
-            & .comments{
+
+            & .comments {
                 width: 100%;
-                & .comment{
+
+                & .comment {
                     box-shadow: $shadow-bottom;
                     margin-bottom: 20px;
                     padding: 10px 5px;
-                    & .comment-head{
+
+                    & .comment-head {
                         display: flex;
                         gap: 10px;
                         width: 100%;
                         margin-bottom: 10px;
                         text-transform: capitalize;
 
-                        @include sm{
+                        @include sm {
                             flex-direction: column;
                         }
 
-                        & span.time{
+                        & span.time {
                             color: $light_text;
                         }
                     }

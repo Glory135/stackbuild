@@ -12,11 +12,17 @@ import { Post } from '@/utils/interfaces';
 
 
 export default function Home() {
+  // page and limit for pagination
   const [page, setPage] = useState<number>(0)
   const [limit, setLimit] = useState<number>(10)
+
+  // search input
   const [search, setSearch] = useState<string>('')
+
+  // post data 
   const [data, setData] = useState<Post[]>([])
 
+  // fetch all data with pagination
   const { isLoading, isError, isSuccess, isFetching, refetch } = useQuery({
     queryKey: ['POSTS'],
     queryFn: () => getAllPosts(page, limit),
@@ -25,8 +31,10 @@ export default function Home() {
     }
   })
 
+  // refresh whenever page or limit changes
   useEffect(() => { refetch() }, [page, limit])
 
+  // search 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (search) {
@@ -37,7 +45,6 @@ export default function Home() {
     } else {
       refetch()
     }
-
   }
 
   return (

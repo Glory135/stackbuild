@@ -1,3 +1,5 @@
+// models
+
 export interface Post {
     id: string;
     text: string;
@@ -25,10 +27,21 @@ export interface Create {
     // content: string;
 }
 
+export interface Update {
+    text: string;
+    tags: string[];
+}
+
 export interface Comment {
     id: string;
     message: string;
     owner: User;
     post: string;
     publishDate: string;
+}
+
+export interface CommentCreate {
+    message: string;
+    owner: string;
+    post: string;
 }

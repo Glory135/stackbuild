@@ -2,27 +2,43 @@
 
 import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 import Error from "@/components/Error";
-import { getComments, getSingleData } from "@/utils/calls";
-import { Avatar } from "@mui/material";
+import { getComments, getSingleData, createComment } from "@/utils/calls";
+import { CommentCreate } from "@/utils/interfaces";
+import { Avatar, TextField } from "@mui/material";
 import { useQuery } from '@tanstack/react-query';
+import Link from "next/link";
 import { useState } from 'react'
 
 export default function SinglePost({ params }: { params: { singlePost: string } }) {
 
+    const [comment, setComment] = useState<string>('')
     const [openModal, setOpenModal] = useState<boolean>(false)
 
+    // get single post data with id
     const { singlePost } = params;
     const { data: singlePostData, isLoading: postLoading, isError: postError, isSuccess: postSuccess } = useQuery({
         queryKey: ['SINGLEPOST'],
         queryFn: () => getSingleData(singlePost)
     })
 
-    const { data: commentsData, isLoading: commentsLoading, isSuccess: commentsSuccess } = useQuery({
+    // get comments data
+    const { data: commentsData, isLoading: commentsLoading, isSuccess: commentsSuccess, refetch } = useQuery({
         queryKey: ['COMMENTS'],
         queryFn: () => getComments(singlePost)
     })
 
-    console.log(commentsData);
+    // to create comment
+    const handleComment = () => {
+        const data: CommentCreate = {
+            message: comment,
+            owner: '60d0fe4f5311236168a109d5',
+            post: singlePost,
+        }
+        createComment(data)
+        setComment('')
+        refetch()
+    }
+
 
     return (
         <div className="singlePost">
@@ -54,7 +70,9 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
                                         }
                                     </div>
                                     <div className="actions">
-                                        <button className="btn edit-btn">Edit</button>
+                                        <Link href={{ pathname: 'create', query: { post: singlePost } }}>
+                                            <button className="btn edit-btn">Edit</button>
+                                        </Link>
                                         <button onClick={() => setOpenModal(true)} className="btn delete-btn">Delete</button>
                                     </div>
                                 </div>
@@ -68,6 +86,20 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
                                 {
                                     singlePostData?.text
                                 }
+                            </div>
+                            <div className="write-comment">
+                                <h3>Write your comment: </h3>
+                                <TextField
+                                    label="comment"
+                                    multiline
+                                    rows={4}
+                                    className='comment-input'
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                />
+                                <button onClick={handleComment} className="btn comment-btn">
+                                    Comment
+                                </button>
                             </div>
                             <div className="singlePost-comments">
                                 <h3>Comments <span>{commentsData?.length}</span></h3>

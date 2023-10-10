@@ -1,9 +1,12 @@
+// all the API calls are made in this page 
+
 import axios from 'axios'
-import { Comment, Create, Post } from './interfaces'
+import { Comment, CommentCreate, Create, Post, Update } from './interfaces'
 
 const BASE_URL = 'https://dummyapi.io/data/v1'
 const APP_ID = '651ff249dd9aa8424e69e202'
 
+// get all posts
 export const getAllPosts = async (page: number, limit: number) => {
     const postsData = await axios.get(
         `${BASE_URL}/post?page=${page}&limit=${limit}`,
@@ -14,6 +17,7 @@ export const getAllPosts = async (page: number, limit: number) => {
     return postsData.data.data as Post[]
 }
 
+// get single post with id
 export const getSingleData = async (id: string) => {
     const singlePostData = await axios.get(
         `${BASE_URL}/post/${id}`,
@@ -24,6 +28,7 @@ export const getSingleData = async (id: string) => {
     return singlePostData.data as Post
 }
 
+// get all comments on a post with id
 export const getComments = async (id: string) => {
     const comments = await axios.get(
         `${BASE_URL}/post/${id}/comment`,
@@ -34,6 +39,7 @@ export const getComments = async (id: string) => {
     return comments.data.data as Comment[];
 }
 
+// get all tags 
 export const getAllTags = async () => {
     const tags = await axios.get(
         `${BASE_URL}/tag`,
@@ -44,6 +50,7 @@ export const getAllTags = async () => {
     return tags.data.data as string[]
 }
 
+// create post 
 export const createPost = async (data: Create) => {
     await axios.post(
         `${BASE_URL}/post/create`,
@@ -60,6 +67,20 @@ export const createPost = async (data: Create) => {
     })
 }
 
+// update post
+export const updatePost = async (id: string, data: Update) => {
+    await axios.put(`${BASE_URL}/post/${id}`, data, {
+        headers: { 'app-id': APP_ID }
+    }
+    ).then((res) => {
+        return res.data
+    }
+    ).catch((err) => {
+        console.log(err);
+    })
+}
+
+// delete post
 export const deletePost = async (id: string) => {
     await axios.delete(
         `${BASE_URL}/post/${id}`,
@@ -68,6 +89,24 @@ export const deletePost = async (id: string) => {
         }
     ).then((res) => {
         console.log(res.data);
+        return res.data
+    }
+    ).catch((err) => {
+        console.log(err);
+    })
+}
+
+// comment on post
+export const createComment = async (data: CommentCreate) => {
+    await axios.post(
+        `${BASE_URL}/comment/create`,
+        data,
+        {
+            headers: { 'app-id': APP_ID }
+        }
+    ).then((res) => {
+        console.log(res);
+        
         return res.data
     }
     ).catch((err) => {

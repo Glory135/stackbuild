@@ -51,7 +51,7 @@ export default function Create() {
     }, [])
 
     // submit for for both edit and create based on editmode
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         // when true
         if (editMode && postId) {
@@ -59,8 +59,13 @@ export default function Create() {
                 text: title,
                 tags: selectedTags,
             }
-            updatePost(postId, data)
-            toast.success('Updated successfully', { autoClose: 5000 })
+            const updateRes = await updatePost(postId, data)
+            if (updateRes.status === 200) {
+                toast.success('Updated successfully', { autoClose: 5000 })
+                push('/')
+            } else {
+                toast.error('ERROR!! try again', { autoClose: 5000 })
+            }
         }
         // when faklse
         else {
@@ -75,11 +80,16 @@ export default function Create() {
                     // content,
                     owner: ownerId
                 }
-                createPost(data);
-                toast.success('Post created', { autoClose: 5000 })
+                const createRes = await createPost(data);
+                if (createRes.status === 200) {
+                    toast.success('Post created', { autoClose: 5000 })
+                    push('/')
+                } else {
+                    toast.error("Error! Try Again", { autoClose: 3000 })
+                }
             }
         }
-        push('/')
+
     }
 
     const hangleSelectTag = (event: SelectChangeEvent<typeof selectedTags>) => {

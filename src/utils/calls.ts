@@ -52,119 +52,77 @@ export const getAllTags = async () => {
 
 // create post 
 export const createPost = async (data: Create) => {
-    await axios.post(
+    const res = await axios.post(
         `${BASE_URL}/post/create`,
         data,
         {
             headers: { 'app-id': APP_ID }
         }
-    ).then((res) => {
-        return {
-            data: res.data,
-            status: 'success',
-            msg: 'Post Created Successfully!!'
-        }
+    )
+    return {
+        data: res.data,
+        status: res.status,
     }
-    ).catch((err) => {
-        return {
-            data: err,
-            status: 'error',
-            msg: 'ERROR!! try again'
-        }
-    })
+
 }
 
 // update post
 export const updatePost = async (id: string, data: Update) => {
-    await axios.put(`${BASE_URL}/post/${id}`, data, {
+    const res = await axios.put(`${BASE_URL}/post/${id}`, data, {
         headers: { 'app-id': APP_ID }
     }
-    ).then((res) => {
-        return {
-            data: res.data,
-            status: 'success',
-            msg: 'Post Ipdated Successfully!!'
-        }
+    )
+    return {
+        data: res.data,
+        status: res.status,
     }
-    ).catch((err) => {
-        return {
-            data: err,
-            status: 'error',
-            msg: 'ERROR!! try again'
-        }
-    })
 }
 
 // delete post
 export const deletePost = async (id: string) => {
-    await axios.delete(
+    const res = await axios.delete(
         `${BASE_URL}/post/${id}`,
         {
             headers: { 'app-id': APP_ID }
         }
-    ).then((res) => {
-        return {
-            data: res.data,
-            status: 'success',
-            msg: 'Post Deleted Successfully!!'
-        }
+    )
+
+    return {
+        data: res.data,
+        status: res.status,
     }
-    ).catch((err) => {
-        return {
-            data: err,
-            status: 'error',
-            msg: 'ERROR!! try again'
-        }
-    })
+
 }
 
 // comment on post
 export const createComment = async (data: CommentCreate) => {
-    await axios.post(
+    const res = await axios.post(
         `${BASE_URL}/comment/create`,
         data,
         {
             headers: { 'app-id': APP_ID }
         }
-    ).then((res) => {
-        return {
-            data: res.data,
-            status: 'success',
-            msg: 'Comment Posted!!'
-        }
+    )
+    return {
+        data: res.data,
+        status: res.status,
     }
-    ).catch((err) => {
-        return {
-            data: err,
-            status: 'error',
-            msg: 'ERROR!! try again'
-        }
-    })
+
 }
 
 // Create user
 export const createUser = async (data: UserCreate) => {
-    console.log(data);
-
-    await axios.post(
+    const res = await axios.post(
         `${BASE_URL}/user/create`,
         data,
         {
             headers: { 'app-id': APP_ID }
         }
-    ).then((res) => {
-        localStorage.setItem('stackuser', JSON.stringify(res.data))
-        return ({
-            data: res.data,
-            status: 'success',
-            msg: 'User Created Successfully!!'
-        })
+    )
+    localStorage.setItem('stackuser', JSON.stringify(res.data))
+    return {
+        data: res.data,
+        status: res.status,
     }
-    ).catch((err) => {
-        return {
-            data: err,
-            status: 'error',
-            msg: 'ERROR!! try again'
-        }
-    })
+
 } 

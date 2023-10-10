@@ -12,6 +12,17 @@ export default function ConfirmDeleteModal({ open, setOpen, id }: { open: boolea
     const handleClose = () => {
         setOpen(false)
     }
+    
+    // Function delete post
+    const handleDelete = async () => {
+        const deleteRes = await deletePost(id);
+        if (deleteRes.status === 200) {
+            toast.success('Deleted successfully', { autoClose: 5000 })
+            push('/')
+        } else {
+            toast.error('ERROR!! try again', { autoClose: 5000 })
+        }
+    }
     return (
         <Modal open={open} onClose={handleClose}>
             <div className="modal-container">
@@ -27,11 +38,7 @@ export default function ConfirmDeleteModal({ open, setOpen, id }: { open: boolea
                     Are you sure you want to delete this?
                 </div>
                 <div className="confirm-actions">
-                    <button onClick={() => {
-                        deletePost(id);
-                        toast.success('Deleted successfully', { autoClose: 5000 })
-                        push('/')
-                    }} className="btn btn-delete">
+                    <button onClick={handleDelete} className="btn btn-delete">
                         Delete
                     </button>
                     <button onClick={handleClose} className="btn btn-cancel">

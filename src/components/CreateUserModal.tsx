@@ -10,16 +10,21 @@ export default function CreateUserModal({ open, setOpen }: { open: boolean, setO
     const [email, setEmail] = useState('')
 
     // function to cereate user
-    const handleCreateUser = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleCreateUser =  async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const body = {
             firstName,
             lastName,
             email
         }
-        createUser(body)
-        toast.success('User Created successfully!!', { autoClose: 5000 })
-        setOpen(false)
+        const userRes = await createUser(body)        
+        if (userRes.status === 200) {
+            toast.success('User Created successfully!!', { autoClose: 5000 })
+            setOpen(false)
+        } else {
+            toast.error('ERROR!!! something happened try again', { autoClose: 5000 })
+        }
+
     }
 
     return (

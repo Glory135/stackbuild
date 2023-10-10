@@ -30,7 +30,7 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
     })
 
     // to create comment
-    const handleComment = () => {
+    const handleComment = async () => {
         // get user
         const owner = getUser()
         if (owner) {
@@ -40,12 +40,16 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
                 owner: ownerId,
                 post: singlePost,
             }
-            createComment(data)
-            toast.success('Commented', { autoClose: 5000 })
-            setComment('')
-            refetch()
+            const commentRes = await createComment(data)
+            if (commentRes.status === 200) {
+                toast.success('Commented', { autoClose: 5000 })
+                setComment('')
+                refetch()
+            } else {
+                toast.error('ERROR!!', { autoClose: 5000 })
+            }
         } else {
-            toast.success('ERROR!!', { autoClose: 5000 })
+            toast.error('ERROR!!', { autoClose: 5000 })
         }
     }
 

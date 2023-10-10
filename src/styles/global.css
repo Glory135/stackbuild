@@ -571,7 +571,7 @@ main.main .singlePost .singlePost-container .singlePost-comments .comments .comm
   color: #bebebe;
 }
 
-.confirm-container {
+.modal-container {
   transform: scale(0);
   animation: pop 0.5s forwards;
   width: 40vw;
@@ -590,11 +590,11 @@ main.main .singlePost .singlePost-container .singlePost-comments .comments .comm
           backdrop-filter: saturate(180%) blur(10px);
 }
 @media (max-width: 700px) {
-  .confirm-container {
+  .modal-container {
     width: 90%;
   }
 }
-.confirm-container .head {
+.modal-container .head {
   width: 100%;
   padding: 5px;
   display: flex;
@@ -602,20 +602,30 @@ main.main .singlePost .singlePost-container .singlePost-comments .comments .comm
   justify-content: space-between;
   flex-direction: row;
 }
-.confirm-container .head h3 {
+.modal-container .head h3 {
   font-weight: bold;
 }
-.confirm-container .head span .cancel-icon {
+.modal-container .head span .cancel-icon {
   font-size: 40px;
   color: #bebebe;
   cursor: pointer;
 }
-.confirm-container .body {
+.modal-container .body {
   width: 100%;
   padding: 10px;
   font-size: 17px;
 }
-.confirm-container .confirm-actions {
+.modal-container .body .create-user-input {
+  width: 100%;
+  margin: 10px 0;
+}
+.modal-container .body .create-user-btn {
+  width: 100%;
+  background-color: #434CAD;
+  color: white;
+  border-radius: 2px;
+}
+.modal-container .confirm-actions {
   width: 100%;
   display: flex;
   align-items: center;
@@ -623,10 +633,10 @@ main.main .singlePost .singlePost-container .singlePost-comments .comments .comm
   flex-direction: row;
   margin-top: 30px;
 }
-.confirm-container .confirm-actions .btn-delete {
+.modal-container .confirm-actions .btn-delete {
   background-color: red;
   color: white;
 }
-.confirm-container .confirm-actions .btn-cancel {
+.modal-container .confirm-actions .btn-cancel {
   background-color: lightgray;
 }/*# sourceMappingURL=global.css.map */

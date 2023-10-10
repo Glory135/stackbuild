@@ -9,12 +9,16 @@ import { getAllPosts } from '@/utils/calls';
 import { useEffect, useState } from 'react';
 import Paginate from '@/components/Paginate';
 import { Post } from '@/utils/interfaces';
+import CreateUserModal from '@/components/CreateUserModal';
+import { checkUser } from '@/utils/utilityFunctions';
 
 
 export default function Home() {
   // page and limit for pagination
   const [page, setPage] = useState<number>(0)
   const [limit, setLimit] = useState<number>(10)
+
+  const [openUserModal, setOpenUserModal] = useState(false)
 
   // search input
   const [search, setSearch] = useState<string>('')
@@ -30,6 +34,16 @@ export default function Home() {
       setData(allData)
     }
   })
+
+  useEffect(() => {
+    const user = checkUser();
+    
+    if (!user) {
+      setOpenUserModal(true);
+    } else {
+      setOpenUserModal(false)
+    }
+  }, [])
 
   // refresh whenever page or limit changes
   useEffect(() => { refetch() }, [page, limit])
@@ -49,6 +63,7 @@ export default function Home() {
 
   return (
     <div className='home'>
+      <CreateUserModal open={openUserModal} setOpen={setOpenUserModal} />
       <section className="search">
         <div className="search-head">Search for blog posts by title...</div>
         <form className="search-input-container" onSubmit={handleSubmit}>

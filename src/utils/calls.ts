@@ -1,7 +1,7 @@
 // all the API calls are made in this page 
 
 import axios from 'axios'
-import { Comment, CommentCreate, Create, Post, Update } from './interfaces'
+import { Comment, CommentCreate, Create, Post, Update, UserCreate } from './interfaces'
 
 const BASE_URL = 'https://dummyapi.io/data/v1'
 const APP_ID = '651ff249dd9aa8424e69e202'
@@ -59,10 +59,18 @@ export const createPost = async (data: Create) => {
             headers: { 'app-id': APP_ID }
         }
     ).then((res) => {
-        return res.data
+        return {
+            data: res.data,
+            status: 'success',
+            msg: 'Post Created Successfully!!'
+        }
     }
     ).catch((err) => {
-        console.log(err);
+        return {
+            data: err,
+            status: 'error',
+            msg: 'ERROR!! try again'
+        }
     })
 }
 
@@ -72,10 +80,18 @@ export const updatePost = async (id: string, data: Update) => {
         headers: { 'app-id': APP_ID }
     }
     ).then((res) => {
-        return res.data
+        return {
+            data: res.data,
+            status: 'success',
+            msg: 'Post Ipdated Successfully!!'
+        }
     }
     ).catch((err) => {
-        console.log(err);
+        return {
+            data: err,
+            status: 'error',
+            msg: 'ERROR!! try again'
+        }
     })
 }
 
@@ -87,10 +103,18 @@ export const deletePost = async (id: string) => {
             headers: { 'app-id': APP_ID }
         }
     ).then((res) => {
-        return res.data
+        return {
+            data: res.data,
+            status: 'success',
+            msg: 'Post Deleted Successfully!!'
+        }
     }
     ).catch((err) => {
-        console.log(err);
+        return {
+            data: err,
+            status: 'error',
+            msg: 'ERROR!! try again'
+        }
     })
 }
 
@@ -103,9 +127,44 @@ export const createComment = async (data: CommentCreate) => {
             headers: { 'app-id': APP_ID }
         }
     ).then((res) => {
-        return res.data
+        return {
+            data: res.data,
+            status: 'success',
+            msg: 'Comment Posted!!'
+        }
     }
     ).catch((err) => {
-        console.log(err);
+        return {
+            data: err,
+            status: 'error',
+            msg: 'ERROR!! try again'
+        }
     })
 }
+
+// Create user
+export const createUser = async (data: UserCreate) => {
+    console.log(data);
+
+    await axios.post(
+        `${BASE_URL}/user/create`,
+        data,
+        {
+            headers: { 'app-id': APP_ID }
+        }
+    ).then((res) => {
+        localStorage.setItem('stackuser', JSON.stringify(res.data))
+        return ({
+            data: res.data,
+            status: 'success',
+            msg: 'User Created Successfully!!'
+        })
+    }
+    ).catch((err) => {
+        return {
+            data: err,
+            status: 'error',
+            msg: 'ERROR!! try again'
+        }
+    })
+} 

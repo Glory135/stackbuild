@@ -4,10 +4,12 @@ import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 import Error from "@/components/Error";
 import { getComments, getSingleData, createComment } from "@/utils/calls";
 import { CommentCreate } from "@/utils/interfaces";
+import { getUser } from "@/utils/utilityFunctions";
 import { Avatar, TextField } from "@mui/material";
 import { useQuery } from '@tanstack/react-query';
 import Link from "next/link";
 import { useState } from 'react'
+import { toast } from 'react-toastify';
 
 export default function SinglePost({ params }: { params: { singlePost: string } }) {
 
@@ -29,14 +31,22 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
 
     // to create comment
     const handleComment = () => {
-        const data: CommentCreate = {
-            message: comment,
-            owner: '60d0fe4f5311236168a109d5',
-            post: singlePost,
+        // get user
+        const owner = getUser()
+        if (owner) {
+            const { id: ownerId } = JSON.parse(owner)
+            const data: CommentCreate = {
+                message: comment,
+                owner: ownerId,
+                post: singlePost,
+            }
+            createComment(data)
+            toast.success('Commented', { autoClose: 5000 })
+            setComment('')
+            refetch()
+        } else {
+            toast.success('ERROR!!', { autoClose: 5000 })
         }
-        createComment(data)
-        setComment('')
-        refetch()
     }
 
 

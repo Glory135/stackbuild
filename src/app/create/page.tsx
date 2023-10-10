@@ -2,6 +2,7 @@
 
 import { createPost, getAllTags, getSingleData, updatePost } from '@/utils/calls';
 import { Create } from '@/utils/interfaces';
+import { getUser } from '@/utils/utilityFunctions';
 import { Box, Chip, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useQuery } from '@tanstack/react-query';
@@ -63,15 +64,20 @@ export default function Create() {
         }
         // when faklse
         else {
-            const data: Create = {
-                text: title,
-                likes: 0,
-                tags: selectedTags,
-                // content,
-                owner: '60d0fe4f5311236168a109d5'
+            const owner = getUser()
+            if (owner) {
+                const { id: ownerId } = JSON.parse(owner)
+
+                const data: Create = {
+                    text: title,
+                    likes: 0,
+                    tags: selectedTags,
+                    // content,
+                    owner: ownerId
+                }
+                createPost(data);
+                toast.success('Post created', { autoClose: 5000 })
             }
-            createPost(data);
-            toast.success('Post created', { autoClose: 5000 })
         }
         push('/')
     }

@@ -45,3 +45,8 @@ export interface CommentCreate {
     owner: string;
     post: string;
 }
+export interface UserCreate {
+    firstName: string;
+    lastName: string;
+    email: string;
+}

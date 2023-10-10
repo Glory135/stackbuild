@@ -1,4 +1,4 @@
-.confirm-container {
+.modal-container {
     transform: scale(0);
     animation: pop 0.5s forwards;
     width: 40vw;
@@ -37,6 +37,17 @@
         width: 100%;
         padding: 10px;
         font-size: 17px;
+
+        & .create-user-input{
+            width: 100%;
+            margin: 10px 0;
+        }
+        & .create-user-btn{
+            width: 100%;
+            background-color: $primary;
+            color: white;
+            border-radius: 2px;
+        }
     }
     & .confirm-actions{
         width: 100%;

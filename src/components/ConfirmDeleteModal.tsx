@@ -14,7 +14,7 @@ export default function ConfirmDeleteModal({ open, setOpen, id }: { open: boolea
     }
     return (
         <Modal open={open} onClose={handleClose}>
-            <div className="confirm-container">
+            <div className="modal-container">
                 <div className="head">
                     <h3>Confirm delete</h3>
                     <span

@@ -15,6 +15,7 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
 
     const [comment, setComment] = useState<string>('')
     const [openModal, setOpenModal] = useState<boolean>(false)
+    const [commenting, setCommenting] = useState<boolean>(false)
 
     // get single post data with id
     const { singlePost } = params;
@@ -32,6 +33,7 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
     // to create comment
     const handleComment = async () => {
         // get user
+        setCommenting(true)
         const owner = getUser()
         if (owner) {
             const { id: ownerId } = JSON.parse(owner)
@@ -48,8 +50,10 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
             } else {
                 toast.error('ERROR!!', { autoClose: 5000 })
             }
+            setCommenting(false)
         } else {
             toast.error('ERROR!!', { autoClose: 5000 })
+            setCommenting(false)
         }
     }
 
@@ -111,8 +115,16 @@ export default function SinglePost({ params }: { params: { singlePost: string } 
                                     value={comment}
                                     onChange={(e) => setComment(e.target.value)}
                                 />
-                                <button onClick={handleComment} className="btn comment-btn">
-                                    Comment
+                                <button
+                                    disabled={commenting}
+                                    onClick={handleComment} className="btn comment-btn">
+                                    {
+                                        commenting
+                                            ?
+                                            ('Commenting...')
+                                            :
+                                            ('comment')
+                                    }
                                 </button>
                             </div>
                             <div className="singlePost-comments">

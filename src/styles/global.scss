@@ -30,6 +30,10 @@ a {
 	font-weight: bold;
 	cursor: pointer;
 	@include click-animation;
+	&:disabled{
+		background-color: grey !important;
+		cursor: not-allowed !important;
+	}
 }
 
 .Link {

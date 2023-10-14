@@ -14,10 +14,11 @@ export default function Create() {
     // this page is used for both the create and edit post 
     // editmode is enables when there is a post query param 
 
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState<string>('')
     // const [content, setContent] = useState('')
     const [selectedTags, setSelectedTags] = useState<string[]>([])
     const [editMode, setEditMode] = useState<boolean>(false)
+    const [submitting, setSubmitting] = useState<boolean>(false)
 
     const { push } = useRouter();
     const searchParams = useSearchParams()
@@ -53,6 +54,7 @@ export default function Create() {
     // submit for for both edit and create based on editmode
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setSubmitting(true)
         // when true
         if (editMode && postId) {
             const data = {
@@ -66,6 +68,7 @@ export default function Create() {
             } else {
                 toast.error('ERROR!! try again', { autoClose: 5000 })
             }
+            setSubmitting(false)
         }
         // when faklse
         else {
@@ -87,6 +90,7 @@ export default function Create() {
                 } else {
                     toast.error("Error! Try Again", { autoClose: 3000 })
                 }
+                setSubmitting(false)
             }
         }
 
@@ -172,15 +176,29 @@ export default function Create() {
                     }
 
                 </Select>
-                <button className="create-btn btn">
+                <button
+                    disabled={submitting}
+                    className="create-btn btn">
                     {
-                        editMode ?
+                        editMode && submitting
+                            ?
                             (
-                                'Update'
-                            ) :
-                            (
-                                'Post'
+                                'Updating...'
                             )
+                            : editMode && !submitting
+                                ?
+                                (
+                                    'Update'
+                                )
+                                : !editMode && submitting
+                                    ?
+                                    (
+                                        'Creating...'
+                                    )
+                                    : (
+                                        'Post'
+                                    )
+
                     }
                 </button>
             </form>

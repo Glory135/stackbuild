@@ -8,21 +8,32 @@ export default function CreateUserModal({ open, setOpen }: { open: boolean, setO
     const [firstName, setFirstname] = useState('')
     const [lastName, setLastname] = useState('')
     const [email, setEmail] = useState('')
+    const [creating, setCreating] = useState(false)
+
 
     // function to cereate user
-    const handleCreateUser =  async(e: React.FormEvent<HTMLFormElement>) => {
+    const handleCreateUser = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setCreating(true)
         const body = {
             firstName,
             lastName,
             email
         }
-        const userRes = await createUser(body)        
+        const userRes = await createUser(body)
+        
         if (userRes.status === 200) {
             toast.success('User Created successfully!!', { autoClose: 5000 })
             setOpen(false)
-        } else {
+            setCreating(false)
+        }
+        else if (userRes.status === 400) {
+            toast.error('ERROR!!! Emai already existss', { autoClose: 5000 })
+            setCreating(false)
+        }
+        else {
             toast.error('ERROR!!! something happened try again', { autoClose: 5000 })
+            setCreating(false)
         }
 
     }
@@ -64,12 +75,12 @@ export default function CreateUserModal({ open, setOpen }: { open: boolean, setO
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
-                    <button className="btn create-user-btn">
-                        Create
+                    <button
+                        disabled={creating}
+                        className="btn create-user-btn">
+                        {creating ? 'Creating...' : 'Create'}
                     </button>
                 </form>
-
-
             </div>
         </Modal>
     )

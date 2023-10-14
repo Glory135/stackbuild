@@ -41,6 +41,10 @@ a {
   transform: scale(90%);
   transition: 0.2s;
 }
+.btn:disabled {
+  background-color: grey !important;
+  cursor: not-allowed !important;
+}
 
 .Link {
   color: inherit;

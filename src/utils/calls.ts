@@ -1,6 +1,6 @@
 // all the API calls are made in this page 
 
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { Comment, CommentCreate, Create, Post, Update, UserCreate } from './interfaces'
 
 const BASE_URL = 'https://dummyapi.io/data/v1'
@@ -52,77 +52,117 @@ export const getAllTags = async () => {
 
 // create post 
 export const createPost = async (data: Create) => {
-    const res = await axios.post(
-        `${BASE_URL}/post/create`,
-        data,
-        {
-            headers: { 'app-id': APP_ID }
+    try {
+        const res = await axios.post(
+            `${BASE_URL}/post/create`,
+            data,
+            {
+                headers: { 'app-id': APP_ID }
+            }
+        )
+        return {
+            data: res.data,
+            status: res.status,
         }
-    )
-    return {
-        data: res.data,
-        status: res.status,
+    } catch (error: any) {
+        return {
+            data: error.response.data,
+            status: error.response.status,
+        }
     }
+
 
 }
 
 // update post
 export const updatePost = async (id: string, data: Update) => {
-    const res = await axios.put(`${BASE_URL}/post/${id}`, data, {
-        headers: { 'app-id': APP_ID }
+    try {
+        const res = await axios.put(`${BASE_URL}/post/${id}`, data, {
+            headers: { 'app-id': APP_ID }
+        }
+        )
+        return {
+            data: res.data,
+            status: res.status,
+        }
+    } catch (error: any) {
+        return {
+            data: error.response.data,
+            status: error.response.status,
+        }
     }
-    )
-    return {
-        data: res.data,
-        status: res.status,
-    }
+
 }
 
 // delete post
 export const deletePost = async (id: string) => {
-    const res = await axios.delete(
-        `${BASE_URL}/post/${id}`,
-        {
-            headers: { 'app-id': APP_ID }
-        }
-    )
+    try {
+        const res = await axios.delete(
+            `${BASE_URL}/post/${id}`,
+            {
+                headers: { 'app-id': APP_ID }
+            }
+        )
 
-    return {
-        data: res.data,
-        status: res.status,
+        return {
+            data: res.data,
+            status: res.status,
+        }
+    } catch (error: any) {
+        return {
+            data: error.response.data,
+            status: error.response.status,
+        }
     }
+
 
 }
 
 // comment on post
 export const createComment = async (data: CommentCreate) => {
-    const res = await axios.post(
-        `${BASE_URL}/comment/create`,
-        data,
-        {
-            headers: { 'app-id': APP_ID }
+    try {
+        const res = await axios.post(
+            `${BASE_URL}/comment/create`,
+            data,
+            {
+                headers: { 'app-id': APP_ID }
+            }
+        )
+        return {
+            data: res.data,
+            status: res.status,
         }
-    )
-    return {
-        data: res.data,
-        status: res.status,
+    } catch (error: any) {
+        return {
+            data: error.response.data,
+            status: error.response.status,
+        }
     }
+
 
 }
 
 // Create user
 export const createUser = async (data: UserCreate) => {
-    const res = await axios.post(
-        `${BASE_URL}/user/create`,
-        data,
-        {
-            headers: { 'app-id': APP_ID }
+    try {
+        const res = await axios.post(
+            `${BASE_URL}/user/create`,
+            data,
+            {
+                headers: { 'app-id': APP_ID }
+            }
+        )
+        localStorage.setItem('stackuser', JSON.stringify(res.data))
+        return {
+            data: res.data,
+            status: res.status,
         }
-    )
-    localStorage.setItem('stackuser', JSON.stringify(res.data))
-    return {
-        data: res.data,
-        status: res.status,
+    } catch (error: any) {
+        return {
+            data: error.response.data,
+            status: error.response.status,
+        }
     }
+
 
 } 
